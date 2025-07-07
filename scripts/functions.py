@@ -3,6 +3,7 @@ from datetime import datetime
 from telethon.sessions import StringSession
 from telethon.sync import TelegramClient
 from telethon.tl.functions.channels import JoinChannelRequest
+from telethon.errors import rpcerrorlist
 import gspread
 
 from config.telegram import API_ID, API_HASH
@@ -39,7 +40,9 @@ def join_grp(grp_name, str_sess):
         try:
             client(JoinChannelRequest(grp_name))
             return True
-        except:
+        except rpcerrorlist.UserAlreadyParticipantError:
+            return True
+        except Exception:
             return False
 
 def get_gspread(url,filename="scripts/cred.json"):
