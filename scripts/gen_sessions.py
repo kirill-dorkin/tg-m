@@ -6,6 +6,8 @@ from pandas import read_csv, isna
 from telethon.sessions import StringSession
 from telethon.sync import TelegramClient
 
+from config.telegram import API_ID, API_HASH
+
 csv = 'scripts/sessions.csv'
 data = read_csv(csv)
 
@@ -35,12 +37,12 @@ for n, row in data.iterrows():
     base_sess = row['sess_str1']
     print(ph_num)
 
-    cl1 = TelegramClient(StringSession(base_sess), 1868530, "edf7d1e794e0b4a5596aa27c29d17eba")
+    cl1 = TelegramClient(StringSession(base_sess), API_ID, API_HASH)
 
     for i in range(2, 5):
         print(i)
         if isna(row[f'sess_str{i}']):
-            cl2 = TelegramClient(StringSession(), 1868530, "edf7d1e794e0b4a5596aa27c29d17eba")
+            cl2 = TelegramClient(StringSession(), API_ID, API_HASH)
             try:
                 sess = get_sess(cl2, cl1, ph_num)
             except Exception:

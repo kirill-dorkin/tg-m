@@ -5,6 +5,8 @@ from telethon.sync import TelegramClient
 from telethon.tl.functions.channels import JoinChannelRequest
 import gspread
 
+from config.telegram import API_ID, API_HASH
+
 debug = False
 
 
@@ -17,7 +19,7 @@ def send_message(sender_session, receiver, message):
         return True
 
     client = TelegramClient(StringSession(sender_session),
-                            1868530, "edf7d1e794e0b4a5596aa27c29d17eba", loop=loop)
+                            API_ID, API_HASH, loop=loop)
 
     client.connect()
     try:
@@ -32,7 +34,7 @@ def send_message(sender_session, receiver, message):
 def join_grp(grp_name, str_sess):
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    client = TelegramClient(StringSession(str_sess), 1868530, "edf7d1e794e0b4a5596aa27c29d17eba", loop=loop)
+    client = TelegramClient(StringSession(str_sess), API_ID, API_HASH, loop=loop)
     with client:
         try:
             client(JoinChannelRequest(grp_name))
@@ -55,4 +57,3 @@ def fetch_messages_gspread(url,sheet_no,starting_row,ending_row,names_col,messag
     messages = worksheet.col_values(messages_col)[starting_row:ending_row]
     return names,messages
 
-    
