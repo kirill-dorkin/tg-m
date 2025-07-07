@@ -6,6 +6,8 @@ from django.views import View
 from django.views.generic import DeleteView, ListView, DetailView
 from telethon.sessions import StringSession
 from telethon.sync import TelegramClient
+
+from config.telegram import API_ID, API_HASH
 from telethon.errors import SessionPasswordNeededError
 
 from . import models
@@ -57,12 +59,10 @@ def get_otp(request, phone_num):
                                       phone=int(user.phone))
         return redirect(reverse_lazy('core:home-page'))
 
-    api_id = 1868530
-    api_key = "edf7d1e794e0b4a5596aa27c29d17eba"
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
-    client = TelegramClient(StringSession(), api_id, api_key, loop=loop)
+    client = TelegramClient(StringSession(), API_ID, API_HASH, loop=loop)
     client.connect()
 
     code = client.send_code_request(phone_num)

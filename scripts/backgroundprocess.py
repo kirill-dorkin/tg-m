@@ -27,4 +27,3 @@ def schedule_cadence(cadence, group_name, start_time):
         start_time += delay
         
         schedule_message(session, group_name, message, schedule=start_time - now)
-        
